@@ -17,5 +17,6 @@ public class Main {
         final GridPrinter gridPrinter = new GridPrinterImpl();
         final Board board = new Board(gridGenerator, gridChecker, gridPrinter);
         board.run();
+        gridPrinter.print(gridGenerator.createGrid());
     }
 }
