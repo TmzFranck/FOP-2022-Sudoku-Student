@@ -67,6 +67,11 @@ public class Grid {
         return data[y][x] != 0;
     }
 
+    public boolean isPermanent(final int x, final int y) {
+        checkBounds(x, y);
+        return permanent[y][x];
+    }
+
     private void checkBounds(final int x, final int y) {
         if (x < 0 || x >= 9 || y < 0 || y >= 9) {
             throw new IllegalArgumentException(
