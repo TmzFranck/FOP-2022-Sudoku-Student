@@ -25,7 +25,13 @@ public class GridPrinterImpl implements GridPrinter {
         for (int i = 0; i < 9; i++){
             for (int x = 0; x < 9; x++){
                 System.out.print(toAnsi("┃ ", Ansi::fgBlue, Ansi::bold));
-                System.out.print(toAnsi( grid.get(x, i) + " ", Ansi::fgRed, Ansi::bold));
+                if(grid.isPermanent(x, i)){
+                    System.out.print(toAnsi( grid.get(x, i) + " ", Ansi::fgRed, Ansi::bold));
+                }
+                else{
+                    System.out.print(toAnsi( grid.get(x, i) + " ", Ansi::fgGreen, Ansi::bold));
+                }
+
                 if (x == 8){
                     System.out.print(toAnsi("┃", Ansi::fgBlue, Ansi::bold));
                 }
