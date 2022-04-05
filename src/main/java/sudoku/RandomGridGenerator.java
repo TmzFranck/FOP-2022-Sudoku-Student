@@ -51,7 +51,7 @@ public class RandomGridGenerator implements GridGenerator {
         int zeroCount = (int) (8 / density);
         String zero = "";
         for (int i = 0; i < zeroCount; i++) {
-            int random = (int) (Math.random() * position.length);
+            int random = (int) (Math.random() * 80);
             while(zero.contains((String.valueOf(random)))){
                 random = (int) (Math.random() * position.length);
             }
