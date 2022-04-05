@@ -1,8 +1,8 @@
 package sudoku;
 
+
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Board {
 
@@ -30,7 +30,15 @@ public class Board {
             }
             gridPrinter.print(grid);
             // TODO: H4 Parse user input & update grid
-            break; // remove after implemented
+            String input = in.nextLine();
+            if (input.equals("quit")){
+                break;
+            }
+            else{
+                    grid.set(Character.getNumericValue(input.charAt(2)),
+                        Character.getNumericValue(input.charAt(0)),
+                        Character.getNumericValue(input.charAt(4)));
+            }
         }
     }
 
