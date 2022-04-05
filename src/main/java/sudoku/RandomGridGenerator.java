@@ -37,8 +37,6 @@ public class RandomGridGenerator implements GridGenerator {
         // TODO: H3 set random entries in data to 0 based on density
         // lower density -> more 0s in array
         // use Math.random()
-
-        Grid gridPrinter = new Grid(data);
         String[] position = {
            "00", "01", "02", "03", "04", "05", "06", "07", "08",
             "10", "11", "12", "13", "14", "15", "16", "17", "18",
