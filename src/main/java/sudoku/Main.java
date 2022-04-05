@@ -1,5 +1,9 @@
 package sudoku;
 
+import java.util.Scanner;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 /**
  * Main entry point in executing the program.
  */
