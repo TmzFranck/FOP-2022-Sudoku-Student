@@ -37,28 +37,12 @@ public class RandomGridGenerator implements GridGenerator {
         // TODO: H3 set random entries in data to 0 based on density
         // lower density -> more 0s in array
         // use Math.random()
-        String[] position = {
-           "00", "01", "02", "03", "04", "05", "06", "07", "08",
-            "10", "11", "12", "13", "14", "15", "16", "17", "18",
-            "20", "21", "22", "23", "24", "25", "26", "27", "28",
-            "30", "31", "32", "33", "34", "35", "36", "37", "38",
-            "40", "41", "42", "43", "44", "45", "46", "47", "48",
-            "50", "51", "52", "53", "54", "55", "56", "57", "58",
-            "60", "61", "62", "63", "64", "65", "66", "67", "68",
-            "70", "71", "72", "73", "74", "75", "76", "77", "78",
-            "80", "81", "82", "83", "84", "85", "86", "87", "88",
-        };
-        int zeroCount = (int) (8 / density);
-        String zero = "";
-        for (int i = 0; i < zeroCount; i++) {
-            int random = (int) (Math.random() * 80);
-            while(zero.contains((String.valueOf(random)))){
-                random = (int) (Math.random() * position.length);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (Math.random() > density) {
+                    data[i][j] = 0;
+                }
             }
-            zero += position[random];
-        }
-        for (int i = 0; i < zero.length(); i += 2){
-            data[Character.getNumericValue(zero.charAt(i))][Character.getNumericValue(zero.charAt(i + 1))] = 0;
         }
         return new Grid(data);
     }
