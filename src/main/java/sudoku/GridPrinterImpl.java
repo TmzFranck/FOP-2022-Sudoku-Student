@@ -6,6 +6,10 @@ import java.util.function.Consumer;
 
 public class GridPrinterImpl implements GridPrinter {
 
+    private static final char[] LEFT_CORNERS = {'┏', '┣', '┗',};
+    private static final char[] MIDDLE_CORNERS = {'┳', '╋', '┻'};
+    private static final char[] RIGHT_CORNERS = {'┓', '┫', '┛',};
+
     /**
      * Wraps the provided {@link String} with a configurable Ansi-sequence terminated with reset.
      */
@@ -20,38 +24,58 @@ public class GridPrinterImpl implements GridPrinter {
 
     @Override
     public void print(final Grid grid) {
-        // TODO H1: Print grid
-        System.out.println(toAnsi("┏ ━ ┳ ━ ┓ ━ ┳ ━ ┓ ━ ┳ ━ ┓ ━ ┳ ━ ┓ ━ ┓", Ansi::fgBlue, Ansi::bold));
-        for (int i = 0; i < 9; i++){
-            for (int x = 0; x < 9; x++){
-                System.out.print(toAnsi("┃ ", Ansi::fgBlue, Ansi::bold));
-                if(grid.isPermanent(x, i)){
-                    System.out.print(toAnsi( grid.get(x, i) + " ", Ansi::fgRed, Ansi::bold));
+        printHorizontal(0);
+        for (int y = 0; y < 9; y++) {
+            System.out.print("┃ ");
+            for (int x = 0; x < 9; x++) {
+                if (grid.isPermanent(x, y)) {
+                    System.out.print(toAnsi(Integer.toString(grid.get(x, y)), Ansi::fgBlue, Ansi::bold) + " ");
+                } else if (grid.isSet(x, y)) {
+                    System.out.print(toAnsi(Integer.toString(grid.get(x, y)), Ansi::fgGreen, Ansi::bold) + " ");
+                } else {
+                    System.out.print(toAnsi(Integer.toString(grid.get(x, y)), Ansi::fgBrightDefault, Ansi::bold) + " ");
                 }
-                else{
-                    System.out.print(toAnsi( grid.get(x, i) + " ", Ansi::fgGreen, Ansi::bold));
-                }
-
-                if (x == 8){
-                    System.out.print(toAnsi("┃", Ansi::fgBlue, Ansi::bold));
+                if (x % 3 == 2) {
+                    // don't print space at the end
+                    if (x == 8) {
+                        System.out.print("┃");
+                    } else {
+                        System.out.print("┃ ");
+                    }
                 }
             }
-            System.out.println("");
-            if(i != 8){
-                System.out.println(toAnsi("┣ ━ ╋ ━ ┫ ━ ┫ ━ ┫ ━ ┫ ━ ┫ ━ ┫ ━ ┫ ━ ┫", Ansi::fgBlue, Ansi::bold));
+            System.out.println();
+            if (y % 3 == 2) {
+                // print either middle or last horizontal bar
+                // if y == 8, print last (with other corners)
+                printHorizontal(y == 8 ? 2 : 1);
             }
         }
-        System.out.println(toAnsi("┗ ━ ┻ ━ ┛ ━ ┻ ━ ┛ ━ ┻ ━ ┛ ━ ┻ ━ ┛ ━ ┛", Ansi::fgBlue, Ansi::bold));
-/*
-        // you may use colors to e.g. draw permanent numbers as red
-        // examples of box-drawing characters with colors:
-        // if your terminal does not support colors, you do not need to use them
-        System.out.println(toAnsi("┏ ━ ┳ ━ ┓", Ansi::fgRed, Ansi::bold));
-        System.out.println(toAnsi("┃   ┃   ┃", Ansi::fgYellow, Ansi::bold));
-        System.out.println(toAnsi("┣ ━ ╋ ━ ┫", Ansi::fgGreen, Ansi::bold));
-        System.out.println(toAnsi("┃   ┃   ┃", Ansi::fgBlue, Ansi::bold));
-        System.out.println(toAnsi("┗ ━ ┻ ━ ┛", Ansi::fgMagenta, Ansi::bold));
+    }
 
- */
+    /**
+     * Prints a horizontal bar.
+     *
+     * <p>
+     * The following values for num are accepted:
+     * </p>
+     * <ul>
+     *     <li>0 for the top bar</li>
+     *     <li>1 for a middle bar</li>
+     *     <li>2 for the last bar</li>
+     * </ul>
+     *
+     * @param num The type of horizontal bar to print
+     */
+    private void printHorizontal(final int num) {
+        System.out.print(LEFT_CORNERS[num]);
+        for (int x = 1; x < 24; x++) {
+            if (x % 8 == 0) {
+                System.out.print(MIDDLE_CORNERS[num]);
+            } else {
+                System.out.print("━");
+            }
+        }
+        System.out.println(RIGHT_CORNERS[num]);
     }
 }
