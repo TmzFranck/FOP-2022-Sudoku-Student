@@ -1,9 +1,5 @@
 package sudoku;
 
-import java.util.Scanner;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 /**
  * Main entry point in executing the program.
  */
@@ -21,6 +17,5 @@ public class Main {
         final GridPrinter gridPrinter = new GridPrinterImpl();
         final Board board = new Board(gridGenerator, gridChecker, gridPrinter);
         board.run();
-        gridPrinter.print(gridGenerator.createGrid());
     }
 }
